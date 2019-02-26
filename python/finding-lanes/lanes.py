@@ -2,6 +2,32 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+def make_coordinates(image, line_parameters):
+    slope, intercept = line_parameters
+    y1 = image.shape[0]
+    y2 = int(y1*(3/5))
+
+
+
+def average_slope_intercept(image, lines):
+    left_fit = []
+    right_fit = []
+    for line in lines:
+        x1, y1, x2, y2 = line.reshape(4)
+        # calculates the slope and y intercept for given line defined by the co-ord
+        parameters = np.polyfit((x1, x1), (y1, y2))
+        # print(parameters) - will print the 
+        slope = parameters[0]
+        intercept = parameters[1]
+        if slope < 0:
+            left_fit.append((slope, intercept))
+        else:
+            right_fit.append((slope, intercept))
+    left_fit_average = np.average(left_fit, axis=0)
+    right_fit_average = np.average(right_fit, axis=0)
+    
+
+
 def toCanny(image):
     "Peforms edge detection on the image"
     #Convert to grayscale 
